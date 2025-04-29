@@ -133,7 +133,7 @@ button:hover {
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 620px) {
     .slider-container {
         position: relative;
         width: 90%;
@@ -149,6 +149,12 @@ button:hover {
     h1 {
         margin-bottom: 10px;
         font-size: 19px;
+        padding: 12px 0px;
+    }
+
+    body {
+        display: block;
+        text-align: center;
     }
 
 }
