@@ -9,10 +9,10 @@ const slides = document.querySelectorAll('.imgCard');
 
 // Pagination (nöqtə) button-lar üçün container seçirik
 const paginationContainer = document.querySelector('.slider-pagination');
+const sliderWrapper = document.getElementById("imgItemBase");
 
 // Hal-hazırki slide-ın indeksini saxlayırıq
 let currentIndex = 0;
-
 
 // "Next" düyməsinə klik olunanda işləyən funksiyanı yazırıq
 nextBtn.addEventListener("click", function () {
@@ -97,69 +97,14 @@ document.querySelectorAll('.slider-pagination-bullet').forEach((bullet, index) =
 });
 
 
-
-// Manual mouse drag functionality
-const slider = document.querySelector('.imageClassBase');
-let isDragging = false;
-let startX = 0;
-let endX = 0;
-
-slider.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    startX = e.clientX;
-    slider.style.cursor = 'grabbing';
+// Touch support
+sliderWrapper.addEventListener("touchstart", (e) => {
+    startPos = e.touches[0].clientX;
 });
 
-slider.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    endX = e.clientX;
-});
-
-slider.addEventListener('mouseup', () => {
-    slider.style.cursor = 'grab';
-    if (!isDragging) return;
-    const diff = endX - startX;
-
-    if (diff > 50) {
-        // swipe right
-        // Bütün şəkillərdən 'active' sinfini silirik
-        slides.forEach(slide => {
-            slide.classList.remove('active');
-        });
-
-        // İndeksi 1 azaldırıq. Əgər 0-dan geri getsə, sondakı slide-a qayıdır
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-
-        // Yeni aktiv şəkilə 'active' sinfini əlavə edirik
-        slides[currentIndex].classList.add('active');
-
-        // Pagination bullet-larının rəngini dəyişirik (aktiv bullet qırmızı olur)
-        document.querySelectorAll('.slider-pagination-bullet').forEach((bullet, index) => {
-            bullet.style.backgroundColor = index === currentIndex ? 'green' : '#000000cc';
-        });
-    } else if (diff < -50) {
-        // swipe left
-        slides.forEach((slide) => {
-            slide.classList.remove('active');
-        });
-
-        // İndeksi 1 artırırıq. Əgər axırıncı slidedə olsa, yenidən 0-cı indexə qayıdır
-        currentIndex = (currentIndex + 1) % slides.length;
-
-        // Yeni aktiv şəkilə 'active' sinfini əlavə edirik
-        slides[currentIndex].classList.add('active');
-        // məs: slides[0 və ya 1].classList.add('active');
-
-        // Pagination bullet-larının rəngini dəyişirik (aktiv bullet qırmızı olur)
-        document.querySelectorAll('.slider-pagination-bullet').forEach((bullet, index) => {
-            bullet.style.backgroundColor = index === currentIndex ? 'green' : '#000000cc';
-        });
-    }
-
-    isDragging = false;
-});
-
-slider.addEventListener('mouseleave', () => {
-    isDragging = false;
-    slider.style.cursor = 'grab';
+sliderWrapper.addEventListener("touchend", (e) => {
+    let diff = e.changedTouches[0].clientX - startPos;
+    if (diff < -50) currentSlide = (currentSlide + 1) % slides.length;
+    if (diff > 50) currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateSlider();
 });

@@ -31,7 +31,6 @@ h1 {
     height: 400px;
     overflow: hidden;
     border-radius: 10px;
-    cursor: grab;
 }
 
 .imgCard {
@@ -49,7 +48,6 @@ h1 {
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
-    pointer-events: none;
 }
 
 .imgCard.active {
@@ -68,17 +66,22 @@ h1 {
     z-index: 99999;
 }
 
-.slider-pagination-bullet {
+.pagination-bullet {
     width: 10px;
     height: 10px;
     background-color: rgba(255, 255, 255, 0.6);
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    z-index: 99999;
 }
 
 .slider-pagination-bullet.active {
-    background-color: green;
+    background-color: green !important;
+}
+
+.pagination-bullet.active {
+    background-color: green !important;
 }
 
 .slider-controls {
@@ -111,8 +114,20 @@ button:hover {
     background-color: #000000cc;
 }
 
+#minus {
+    left: 10px;
+}
+
+#plus {
+    right: 10px;
+}
+
+/* Universal adjustments */
 @media (max-width: 1000px) {
     .slider-container {
+        position: relative;
         width: 98%;
+        max-width: 900px;
+        margin: 0 auto;
     }
 }
