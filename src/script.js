@@ -9,7 +9,7 @@ const slides = document.querySelectorAll('.imgCard');
 
 // Pagination (nöqtə) button-lar üçün container seçirik
 const paginationContainer = document.querySelector('.slider-pagination');
-const sliderWrapper = document.getElementById("imgItemBase");
+const sliderWrapper = document.getElementById("sliderWrapper");
 
 // Hal-hazırki slide-ın indeksini saxlayırıq
 let currentIndex = 0;
@@ -98,13 +98,39 @@ document.querySelectorAll('.slider-pagination-bullet').forEach((bullet, index) =
 
 
 // Touch support
+
+// Touch support - sürüşdürmə ilə şəkil dəyişdirmə
+let startPos = 0;
+let endPos = 0;
+
 sliderWrapper.addEventListener("touchstart", (e) => {
-    startPos = e.touches[0].clientX;
+    startPos = e.touches[0].clientX; // Başlanğıc nöqtəsi
 });
 
 sliderWrapper.addEventListener("touchend", (e) => {
-    let diff = e.changedTouches[0].clientX - startPos;
-    if (diff < -50) currentSlide = (currentSlide + 1) % slides.length;
-    if (diff > 50) currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-    updateSlider();
+    endPos = e.changedTouches[0].clientX; // Bitmə nöqtəsi
+    let diff = endPos - startPos; // Fərq
+
+    if (Math.abs(diff) > 50) {  // Kifayət qədər sürüşdürməni qiymətləndiririk
+        if (diff < 0) {
+            // Sağdan sola sürüşdürmə - növbəti şəkil
+            currentIndex = (currentIndex + 1) % slides.length;
+        } else {
+            // Soldan sağa sürüşdürmə - əvvəlki şəkil
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        }
+
+        // Bütün şəkillərdən 'active' sinfini silirik
+        slides.forEach(slide => {
+            slide.classList.remove('active');
+        });
+
+        // Yeni aktiv şəkilə 'active' sinfi əlavə edirik
+        slides[currentIndex].classList.add('active');
+
+        // Pagination bullet-larını yeniləyirik
+        document.querySelectorAll('.slider-pagination-bullet').forEach((bullet, index) => {
+            bullet.style.backgroundColor = index === currentIndex ? 'green' : '#000000cc';
+        });
+    }
 });
