@@ -16,6 +16,7 @@ body {
 
 h1 {
     margin-bottom: 10px;
+    font-size: 50px;
 }
 
 .slider-container {
@@ -130,4 +131,24 @@ button:hover {
         max-width: 900px;
         margin: 0 auto;
     }
+}
+
+@media (max-width: 500px) {
+    .slider-container {
+        position: relative;
+        width: 90%;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .slider-wrapper {
+        width: 100%;
+        height: 250px;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+        font-size: 30px;
+    }
+
 }

@@ -97,7 +97,8 @@ document.querySelectorAll('.slider-pagination-bullet').forEach((bullet, index) =
 });
 
 
-// Touch support
+
+
 
 // Touch support - sürüşdürmə ilə şəkil dəyişdirmə
 let startPos = 0;
@@ -106,6 +107,7 @@ let endPos = 0;
 sliderWrapper.addEventListener("touchstart", (e) => {
     startPos = e.touches[0].clientX; // Başlanğıc nöqtəsi
 });
+
 
 sliderWrapper.addEventListener("touchend", (e) => {
     endPos = e.changedTouches[0].clientX; // Bitmə nöqtəsi
